@@ -1,0 +1,1 @@
+msbuild.exe %srcFolder%\source\NBlackBox\NBlackBox.sln
