@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>equalidator</id>
+    <version>1.0.13.0</version>
+    <title>equalidator</title>
+    <authors>Ralf Westphal</authors>
+    <owners>Ralf Westphal</owners>
+    <licenseUrl>http://opensource.org/licenses/BSD-2-Clause</licenseUrl>
+    <projectUrl>https://github.com/ralfw/Equalidator</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Easily compare object graphs for value equality in your unit tests.</description>
+    <releaseNotes />
+    <copyright>Copyright 2013</copyright>
+    <language />
+    <tags>NUnit xUnit</tags>
+    <references>
+      <reference file="equalidator.dll" />
+    </references>
+  </metadata>
+</package>
