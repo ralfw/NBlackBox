@@ -1,7 +1,7 @@
 ﻿using System;
 using nblackbox.contract;
 
-namespace nblackbox
+namespace nblackbox.internals
 {
     internal class RecordedEvent : IRecordedEvent
     {

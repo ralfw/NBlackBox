@@ -2,6 +2,7 @@
 using System.IO;
 using NUnit.Framework;
 using equalidator;
+using nblackbox.internals;
 
 namespace nblackbox.tests
 {

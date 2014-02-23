@@ -13,7 +13,7 @@ namespace nblackbox.tests
     public class test_FileBlackBox
     {
         [Test]
-        public void Akzeptanz()
+        public void Acceptance()
         {
             const string BBFOLDERPATH = "testbb";
 
@@ -35,13 +35,16 @@ namespace nblackbox.tests
             Assert.AreEqual(new[] { 0, 1, 2, 3 }, recorded.Select(r => r.Index).ToArray());
             Assert.AreEqual(new[]{"d1", "d2", "d3", "d4"}, recorded.Select(r=>r.Data).ToArray());
 
-            recorded = sut.Player.OfEvent("a").Play().ToList();
+            recorded = sut.Player.ForEvent("a").Play().ToList();
             Assert.AreEqual(3, recorded.Count);
 
             recorded = sut.Player.WithContext("2").Play().ToList();
             Assert.AreEqual(2, recorded.Count);
+            
+            recorded = sut.Player.WithContext("1", "3").Play().ToList();
+            Assert.AreEqual(2, recorded.Count);
         
-            recorded = sut.Player.OfEvent("a").WithContext("2").Play().ToList();
+            recorded = sut.Player.ForEvent("a").WithContext("2").Play().ToList();
             Assert.AreEqual(1, recorded.Count);
         
             recorded = sut.Player.FromIndex(2).Play().ToList();

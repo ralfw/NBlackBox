@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace nblackbox
+namespace nblackbox.internals
 {
     internal class FileStore
     {
@@ -23,7 +23,7 @@ namespace nblackbox
         {
             using (var sr = new StreamReader(filename))
             {
-                var versionnumber = sr.ReadLine();
+                var ignore_versionnumber_for_now = sr.ReadLine();
                 var timestamp = DateTime.Parse(sr.ReadLine());
                 var index = long.Parse("0" + sr.ReadLine());
                 var name = sr.ReadLine();

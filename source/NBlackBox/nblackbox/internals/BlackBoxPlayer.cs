@@ -4,14 +4,14 @@ using System.IO;
 using System.Linq;
 using nblackbox.contract;
 
-namespace nblackbox
+namespace nblackbox.internals
 {
     internal class BlackBoxPlayer : IBlackBoxPlayer
     {
         private readonly string _folderpath;
         private readonly FileStore _filestore;
 
-        private List<Func<IRecordedEvent, bool>> _predicates; 
+        private readonly List<Func<IRecordedEvent, bool>> _predicates; 
 
 
         public BlackBoxPlayer(string folderpath, FileStore filestore)
@@ -28,7 +28,7 @@ namespace nblackbox
             return this;
         }
 
-        public IBlackBoxPlayer OfEvent(params string[] eventnames)
+        public IBlackBoxPlayer ForEvent(params string[] eventnames)
         {
             _predicates.Add(r => eventnames.Contains(r.Name));
             return this;
