@@ -18,37 +18,38 @@ namespace nblackbox.tests
             const string BBFOLDERPATH = "testbb";
 
             if (Directory.Exists(BBFOLDERPATH)) Directory.Delete(BBFOLDERPATH, true);
-            var sut = new FileBlackBox(BBFOLDERPATH);
+            using (var sut = new FileBlackBox(BBFOLDERPATH))
+            {
+                var recorded = new List<IRecordedEvent>();
+                sut.OnRecorded += recorded.Add;
 
-            var recorded = new List<IRecordedEvent>();
-            sut.OnRecorded += recorded.Add;
+                sut.Record("a", "1", "d1");
+                sut.Record("a", "2", "d2");
+                sut.Record("b", "2", "d3");
+                sut.Record("a", "3", "d4");
 
-            sut.Record("a", "1", "d1");
-            sut.Record("a", "2", "d2");
-            sut.Record("b", "2", "d3");
-            sut.Record("a", "3", "d4");
+                Assert.AreEqual(4, recorded.Count);
 
-            Assert.AreEqual(4, recorded.Count);
+                recorded = sut.Player.Play().ToList();
+                Assert.AreEqual(4, recorded.Count);
+                Assert.AreEqual(new[] {0, 1, 2, 3}, recorded.Select(r => r.Index).ToArray());
+                Assert.AreEqual(new[] {"d1", "d2", "d3", "d4"}, recorded.Select(r => r.Data).ToArray());
 
-            recorded = sut.Player.Play().ToList();
-            Assert.AreEqual(4, recorded.Count);
-            Assert.AreEqual(new[] { 0, 1, 2, 3 }, recorded.Select(r => r.Index).ToArray());
-            Assert.AreEqual(new[]{"d1", "d2", "d3", "d4"}, recorded.Select(r=>r.Data).ToArray());
+                recorded = sut.Player.ForEvent("a").Play().ToList();
+                Assert.AreEqual(3, recorded.Count);
 
-            recorded = sut.Player.ForEvent("a").Play().ToList();
-            Assert.AreEqual(3, recorded.Count);
+                recorded = sut.Player.WithContext("2").Play().ToList();
+                Assert.AreEqual(2, recorded.Count);
 
-            recorded = sut.Player.WithContext("2").Play().ToList();
-            Assert.AreEqual(2, recorded.Count);
-            
-            recorded = sut.Player.WithContext("1", "3").Play().ToList();
-            Assert.AreEqual(2, recorded.Count);
-        
-            recorded = sut.Player.ForEvent("a").WithContext("2").Play().ToList();
-            Assert.AreEqual(1, recorded.Count);
-        
-            recorded = sut.Player.FromIndex(2).Play().ToList();
-            Assert.AreEqual(2, recorded.Count);
+                recorded = sut.Player.WithContext("1", "3").Play().ToList();
+                Assert.AreEqual(2, recorded.Count);
+
+                recorded = sut.Player.ForEvent("a").WithContext("2").Play().ToList();
+                Assert.AreEqual(1, recorded.Count);
+
+                recorded = sut.Player.FromIndex(2).Play().ToList();
+                Assert.AreEqual(2, recorded.Count);
+            }
         }
     }
 }

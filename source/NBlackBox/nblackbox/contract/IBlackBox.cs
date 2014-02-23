@@ -2,7 +2,7 @@
 
 namespace nblackbox.contract
 {
-    public interface IBlackBox
+    public interface IBlackBox : IDisposable
     {
         void Record(string name, string context, string data);
         void Record(IEvent @event);

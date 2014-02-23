@@ -12,34 +12,41 @@ Usage samples:
 ```
 using nblackbox;
 ...
-var bb = new NBlackBox(@"c:\myblackbox");
+using(var bb = new FileBlackBox(@"c:\myblackbox")) {
 
-bb.Record("eventname", "aggregateid", "data, data");
-...
+  bb.Record("eventname", "aggregateid", "data, data");
+  ...
 
-var events = bb.Player.Play(); // replays all events
+  var events = bb.Player.Play(); // replays all events
 
-// selective replay
-events = bb.Player.ForEvent("eventname").Play();
-events = bb.Player.ForEvent("e1", "e2", "e3", ...).Play();
+  // selective replay
+  events = bb.Player.ForEvent("eventname").Play();
+  events = bb.Player.ForEvent("e1", "e2", "e3", ...).Play();
 
-bb.Player.WithContext("aggregateid").Play();
-bb.Player.WithContext("a1", "a2", "a3", ...).Play();
+  bb.Player.WithContext("aggregateid").Play();
+  bb.Player.WithContext("a1", "a2", "a3", ...).Play();
 
-bb.Player.FromIndex(42).Play(); // indexes are 0 based
+  bb.Player.FromIndex(42).Play(); // indexes are 0 based
 
-bb.Player.FromIndex(42).WithContext("a1").ForEvent("e1", "e2").Play();
-
+  bb.Player.FromIndex(42).WithContext("a1").ForEvent("e1", "e2").Play();
+}
 ```
 
 When recording an event the black box fires an event. It´s fired synchronously; subscribers should switch to another thread if their event processing is time consuming.
 
 ```
-var bb = new NBlackBox(...);
-bb.OnRecorded += recordedEvent => { ... };
-...
+using(var bb = new FileBlackBox(...)) {
+  bb.OnRecorded += recordedEvent => { ... };
+  ...
+}
 
 ```
+
+The FileBlackBox class stores all events as separate text files in a folder passed to its ctor.
+
+A reader-writer-lock is used to make the FileBlackBox thread-safe.
+
+Of course the FileBlackBox is not tuned for highest performance. Rather it´s supposed to make exploration of event sourcing and related topics like CQRS as painless as possible.
 
 Enjoy!
 

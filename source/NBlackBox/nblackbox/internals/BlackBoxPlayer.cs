@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using nblackbox.contract;
 
 namespace nblackbox.internals
@@ -10,14 +11,15 @@ namespace nblackbox.internals
     {
         private readonly string _folderpath;
         private readonly FileStore _filestore;
-
+        private readonly ReaderWriterLock _lock;
         private readonly List<Func<IRecordedEvent, bool>> _predicates; 
 
 
-        public BlackBoxPlayer(string folderpath, FileStore filestore)
+        public BlackBoxPlayer(string folderpath, FileStore filestore, ReaderWriterLock _lock)
         {
             _folderpath = folderpath;
             _filestore = filestore;
+            this._lock = _lock;
             _predicates = new List<Func<IRecordedEvent, bool>>();
         }
 
@@ -43,9 +45,14 @@ namespace nblackbox.internals
 
         public IEnumerable<IRecordedEvent> Play()
         {
-            var filenames = Directory.GetFiles(_folderpath);
-            var events = filenames.Select(_filestore.Read);
-            return events.Where(e => _predicates.All(p => p(e)));
+            _lock.AcquireReaderLock(Timeout.Infinite);
+            try
+            {
+                var filenames = Directory.GetFiles(_folderpath);
+                var events = filenames.Select(_filestore.Read);
+                return events.Where(e => _predicates.All(p => p(e)));
+            }
+            finally { _lock.ReleaseReaderLock(); }
         }
     }
 }
