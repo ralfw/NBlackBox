@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("nblackbox")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("NBlackBox")]
+[assembly: AssemblyDescription("Easily record and replay domain events. A small and simple to use event store.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("nblackbox")]
+[assembly: AssemblyProduct("NBlackBox")]
 [assembly: AssemblyCopyright("Copyright ©  2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
