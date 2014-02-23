@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nblackbox", "nblackbox\nblackbox.csproj", "{8594A3E9-7042-4A9A-89F4-07B219D571AF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nblackbox.tests", "nblackbox.tests\nblackbox.tests.csproj", "{BADB45AC-93D9-4978-BD54-15BBB1070339}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8594A3E9-7042-4A9A-89F4-07B219D571AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8594A3E9-7042-4A9A-89F4-07B219D571AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8594A3E9-7042-4A9A-89F4-07B219D571AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8594A3E9-7042-4A9A-89F4-07B219D571AF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BADB45AC-93D9-4978-BD54-15BBB1070339}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BADB45AC-93D9-4978-BD54-15BBB1070339}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BADB45AC-93D9-4978-BD54-15BBB1070339}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BADB45AC-93D9-4978-BD54-15BBB1070339}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
