@@ -13,7 +13,6 @@ Usage samples:
 using nblackbox;
 ...
 using(var bb = new FileBlackBox(@"c:\myblackbox")) {
-
   bb.Record("eventname", "aggregateid", "data, data");
   ...
 
