@@ -1,13 +1,15 @@
-NBlackBox
-=========
+# NBlackBox
 
 With NBlackBox you can record domain events in a simple store and later replay them.
 
-Usually this is called event sourcing with an event store as a persistence medium. But I like to compare it with recording data during a flight in a black box. This data represents "the truth" about the state changes of an air plane and can be played back to get insight into the movements of the air plane - especially in case of a crash.
+Usually this is called event sourcing with an event store as a persistence medium.
+But I like to compare it with recording data during a flight in a black box.
+This data represents "the truth" about the state changes of an air plane and can be
+played back to get insight into the movements of the air plane - especially in case of a crash.
 
 Once recorded data cannot be changed. And depending on the use case the recorded data be played back selectively.
 
-Usage samples:
+Usage samples for the folder based black box:
 
 ```
 using nblackbox;
@@ -31,7 +33,8 @@ using(var bb = new FolderBlackBox(@"c:\myblackbox")) {
 }
 ```
 
-When recording an event the black box fires an event. It´s fired synchronously; subscribers should switch to another thread if their event processing is time consuming.
+When recording an event the black box fires an event. It´s fired synchronously; 
+subscribers should switch to another thread if their event processing is time consuming.
 
 ```
 using(var bb = new FolderBlackBox(...)) {
@@ -47,6 +50,11 @@ A reader-writer-lock is used to make the FolderBlackBox thread-safe.
 
 Of course the FolderBlackBox is not tuned for highest performance. Rather it´s supposed to make exploration of event sourcing and related topics like CQRS as painless as possible.
 
+In addition to folder based storage of events there is a SQlite based black box: SQliteBlackBox - and it´s working the same, of course.
+
 Enjoy!
 
 -Ralf Westphal, Hamburg, Germany
+
+### Credits
+Thanks to icanis for his contributions to the SQliteBlackBox.
