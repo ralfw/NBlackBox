@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="test_SqliteBlackBox.cs" />
     <Compile Include="test_FileBlackBox.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="test_FileStore.cs" />
