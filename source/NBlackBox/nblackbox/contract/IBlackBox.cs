@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace nblackbox.contract
 {
@@ -6,6 +7,7 @@ namespace nblackbox.contract
     {
         void Record(string name, string context, string data);
         void Record(IEvent @event);
+        void Record(IEnumerable<IEvent> eventBatch);
 
         IBlackBoxPlayer Player { get; }
 

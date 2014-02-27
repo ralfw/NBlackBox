@@ -22,7 +22,7 @@ namespace nblackbox.tests
             const string BBFILENAME = "testbb.db3";
 
             if (File.Exists(BBFILENAME)) File.Delete(BBFILENAME);
-            using (var sut = new SqliteBlackBox(BBFILENAME))
+            using (var sut = new SQliteBlackBox(BBFILENAME))
             {
                 var recorded = new List<IRecordedEvent>();
                 sut.OnRecorded += recorded.Add;
@@ -59,7 +59,7 @@ namespace nblackbox.tests
         [Test]
         public void StoreTest()
         {
-            var bb = new SqliteBlackBox("TestStore.db3");
+            var bb = new SQliteBlackBox("TestStore.db3");
 
             var sw = Stopwatch.StartNew();
             bb.Record(CreateRecords());

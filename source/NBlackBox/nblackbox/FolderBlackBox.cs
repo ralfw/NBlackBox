@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using nblackbox.contract;
 using nblackbox.internals;
@@ -25,13 +27,34 @@ namespace nblackbox
             RecordedEvent @event;
             lock (this)
             {
-                var timestamp = DateTime.Now;
-                var index = Directory.GetFiles(_folderpath).Length;
-                @event = new RecordedEvent(timestamp, index, name, context, data);
-                var filename = timestamp.ToString("s").Replace(":", "-") + "-" + index.ToString("000000000000");
-                _filestore.Write(Path.Combine(_folderpath, filename), @event);
+                @event = Store(name, context, data);
             }
             OnRecorded(@event);
+        }
+
+
+        public void Record(IEnumerable<IEvent> eventBatch)
+        {
+            var events = new List<RecordedEvent>();
+            lock (this)
+            {
+                eventBatch.ToList().ForEach(e => events.Add(Store(e.Name, e.Context, e.Data)));
+            }
+            events.ForEach(OnRecorded);
+        }
+
+
+        private RecordedEvent Store(string name, string context, string data)
+        {
+            var timestamp = DateTime.Now;
+            var index = Directory.GetFiles(_folderpath).Length;
+
+            var @event = new RecordedEvent(timestamp, index, name, context, data);
+
+            var filename = timestamp.ToString("s").Replace(":", "-") + "-" + index.ToString("000000000000");
+            _filestore.Write(Path.Combine(_folderpath, filename), @event);
+
+            return @event;
         }
 
 

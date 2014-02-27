@@ -2,21 +2,19 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using nblackbox.contract;
+using System.Data.SQLite;
+using System.IO;
+using nblackbox.internals;
 
 namespace nblackbox
 {
-    using System.Data.SQLite;
-    using System.IO;
 
-    using nblackbox.internals;
-
-    public class SqliteBlackBox : IBlackBox
+    public class SQliteBlackBox : IBlackBox
     {
         private readonly string connectionString;
 
-        public SqliteBlackBox(string filename)
+        public SQliteBlackBox(string filename)
         {
             connectionString = String.Format("Data Source={0}", filename);
 
