@@ -90,6 +90,11 @@ namespace nblackbox
         {
             private string connectionString;
 
+            private List<IEnumerable<String>> contextConstraints = new List<IEnumerable<String>>();
+            private List<IEnumerable<String>> nameConstraints = new List<IEnumerable<String>>();
+
+            private long startIndex = 0;
+
             public SqlitePlayer(string connectionString)
             {
                 this.connectionString = connectionString;
@@ -97,17 +102,20 @@ namespace nblackbox
 
             public IBlackBoxPlayer WithContext(params string[] contexts)
             {
-                throw new NotImplementedException();
+                contextConstraints.Add(contexts);
+                return this;
             }
 
             public IBlackBoxPlayer ForEvent(params string[] eventnames)
             {
-                throw new NotImplementedException();
+                nameConstraints.Add(eventnames);
+                return this;
             }
 
             public IBlackBoxPlayer FromIndex(long index)
             {
-                throw new NotImplementedException();
+                startIndex = Math.Max(startIndex, index);
+                return this;
             }
 
             public IEnumerable<IRecordedEvent> Play()
@@ -117,7 +125,22 @@ namespace nblackbox
                     connection.Open();
                     using (var command = connection.CreateCommand())
                     {
-                        command.CommandText = @"SELECT eventIndex, timestamp, name, context, data FROM events";
+                        var sb = new StringBuilder("SELECT eventIndex, timestamp, name, context, data FROM events")
+                           .AppendFormat(" WHERE eventIndex >= {0}", startIndex + 1); // NOTE: SQLite's autoincrement is one-based!
+
+                        foreach (var nameConstraint in nameConstraints)
+                        {
+                            var options = String.Join(", ", nameConstraint.Select(SqliteStringEscape));
+                            sb.AppendFormat(" AND name in ({0})", options);
+                        }
+
+                        foreach (var contextConstraint in contextConstraints)
+                        {
+                            var options = String.Join(", ", contextConstraint.Select(SqliteStringEscape));
+                            sb.AppendFormat(" AND context in ({0})", options);
+                        }
+
+                        command.CommandText = sb.ToString();
 
                         using (var reader = command.ExecuteReader())
                         {
@@ -134,7 +157,11 @@ namespace nblackbox
                         }
                     }
                 }
+            }
 
+            private String SqliteStringEscape(String s)
+            {
+                return String.Concat("'", s, "'");
             }
         }
     }
