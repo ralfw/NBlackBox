@@ -18,7 +18,7 @@ namespace nblackbox.tests
             const string BBFOLDERPATH = "testbb";
 
             if (Directory.Exists(BBFOLDERPATH)) Directory.Delete(BBFOLDERPATH, true);
-            using (var sut = new FileBlackBox(BBFOLDERPATH))
+            using (var sut = new FolderBlackBox(BBFOLDERPATH))
             {
                 var recorded = new List<IRecordedEvent>();
                 sut.OnRecorded += recorded.Add;

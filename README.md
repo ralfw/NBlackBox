@@ -12,7 +12,7 @@ Usage samples:
 ```
 using nblackbox;
 ...
-using(var bb = new FileBlackBox(@"c:\myblackbox")) {
+using(var bb = new FolderBlackBox(@"c:\myblackbox")) {
   bb.Record("eventname", "aggregateid", "data, data");
   ...
 
@@ -34,18 +34,18 @@ using(var bb = new FileBlackBox(@"c:\myblackbox")) {
 When recording an event the black box fires an event. It´s fired synchronously; subscribers should switch to another thread if their event processing is time consuming.
 
 ```
-using(var bb = new FileBlackBox(...)) {
+using(var bb = new FolderBlackBox(...)) {
   bb.OnRecorded += recordedEvent => { ... };
   ...
 }
 
 ```
 
-The FileBlackBox class stores all events as separate text files in a folder passed to its ctor.
+The FolderBlackBox class stores all events as separate text files in a folder passed to its ctor.
 
-A reader-writer-lock is used to make the FileBlackBox thread-safe.
+A reader-writer-lock is used to make the FolderBlackBox thread-safe.
 
-Of course the FileBlackBox is not tuned for highest performance. Rather it´s supposed to make exploration of event sourcing and related topics like CQRS as painless as possible.
+Of course the FolderBlackBox is not tuned for highest performance. Rather it´s supposed to make exploration of event sourcing and related topics like CQRS as painless as possible.
 
 Enjoy!
 

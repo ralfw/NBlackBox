@@ -6,12 +6,12 @@ using nblackbox.internals;
 
 namespace nblackbox
 {
-    public class FileBlackBox : IBlackBox
+    public class FolderBlackBox : IBlackBox
     {
         private readonly string _folderpath;
         private readonly FileStore _filestore;
 
-        public FileBlackBox(string folderpath)
+        public FolderBlackBox(string folderpath)
         {
             if (!Directory.Exists(folderpath)) Directory.CreateDirectory(folderpath);
             _folderpath = folderpath;
