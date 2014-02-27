@@ -9,6 +9,10 @@ using nblackbox.contract;
 
 namespace nblackbox.tests
 {
+    using System.Diagnostics;
+
+    using nblackbox.internals;
+
     [TestFixture]
     public class test_SqliteBlackBox
     {
@@ -50,6 +54,44 @@ namespace nblackbox.tests
                 recorded = sut.Player.FromIndex(2).Play().ToList();
                 Assert.AreEqual(2, recorded.Count);
             }
+        }
+
+        [Test]
+        public void StoreTest()
+        {
+            var bb = new SqliteBlackBox("TestStore.db3");
+
+            var sw = Stopwatch.StartNew();
+            bb.Record(CreateRecords());
+            sw.Stop();
+            Console.WriteLine("Created in {0}", sw.Elapsed);
+
+            sw.Restart();
+            var cards = bb.Player.Play().ToList();
+            sw.Stop();
+            Console.WriteLine("Loaded in {0}", sw.Elapsed);
+            Assert.IsTrue(true);
+        }
+
+        private static IEnumerable<IEvent> CreateRecords()
+        {
+            for (int card = 0; card < 1000; card++)
+            {
+                var newGuid = Guid.NewGuid().ToString();
+                var randomText = newGuid;
+                yield return new BareEvent() { Name = "CardAdded", Context = newGuid, Data = randomText };
+                for (int i = 0; i < 10; i++)
+                {
+                    yield return new BareEvent() { Name = "CardMoved", Context = newGuid, Data = i.ToString() };
+                }
+            }
+        }
+
+        private class BareEvent : IEvent
+        {
+            public string Name { get; set; }
+            public string Context { get; set; }
+            public string Data { get; set; }
         }
     }
 }

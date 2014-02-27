@@ -45,9 +45,19 @@ namespace nblackbox
             }
         }
 
-        public void Record(IEvent @event) { Record(@event.Name, @event.Context, @event.Data); }
+
+        public void Record(IEvent @event) { Record(new[] {@event}); }
 
         public void Record(string name, string context, string data)
+        {
+            Record(new BareEvent() { Name = name, Context = context, Data = data});
+        }
+
+        /// <summary>
+        /// Inserts the given events in a single transaction; use this method in favour of looping in the application for preformance reasons.
+        /// </summary>
+        /// <param name="events"></param>
+        public void Record(IEnumerable<IEvent> events)
         {
             using (var connection = new SQLiteConnection(this.connectionString))
             {
@@ -56,17 +66,23 @@ namespace nblackbox
                 {
                     using (var command = connection.CreateCommand())
                     {
-                        var timestamp = DateTime.Now;
                         command.CommandText = @"INSERT INTO events (timestamp, name, context, data) VALUES(@timestamp,@name,@context,@data)";
+                        command.Prepare();
+
+                        foreach (var @event in events)
+                        {
+                            var timestamp = DateTime.Now;
                         command.Parameters.AddWithValue("@timestamp", timestamp);
-                        command.Parameters.AddWithValue("@name", name);
-                        command.Parameters.AddWithValue("@context", context);
-                        command.Parameters.AddWithValue("@data", data);
+                        command.Parameters.AddWithValue("@name", @event.Name);
+                        command.Parameters.AddWithValue("@context", @event.Context);
+                        command.Parameters.AddWithValue("@data", @event.Data);
 
                         command.ExecuteNonQuery();
                         var index = connection.LastInsertRowId - 1; // NOTE: SQLite's autoincrement is one-based!
 
-                        OnRecorded(new RecordedEvent(timestamp, index, name, context, data));
+                        OnRecorded(new RecordedEvent(timestamp, index, @event.Name, @event.Context, @event.Data));
+
+                        }
                     }
 
                     transaction.Commit();
@@ -84,6 +100,13 @@ namespace nblackbox
         public void Dispose()
         {
             // nothing to do
+        }
+
+        private class BareEvent : IEvent
+        {
+            public string Name { get; set; }
+            public string Context { get; set; }
+            public string Data { get; set; }
         }
 
         private class SqlitePlayer : IBlackBoxPlayer
