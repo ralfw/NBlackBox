@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace nblackbox.internals
+namespace nblackbox.internals.folder
 {
     internal class FileStore
     {

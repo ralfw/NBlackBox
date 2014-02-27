@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading;
 using nblackbox.contract;
 using nblackbox.internals;
+using nblackbox.internals.folder;
 
 namespace nblackbox
 {
@@ -21,18 +21,8 @@ namespace nblackbox
         }
 
 
-        public void Record(IEvent @event) { Record(@event.Name, @event.Context, @event.Data); }
-        public void Record(string name, string context, string data)
-        {
-            RecordedEvent @event;
-            lock (this)
-            {
-                @event = Store(name, context, data);
-            }
-            OnRecorded(@event);
-        }
-
-
+        public void Record(IEvent @event) { Record(new[]{@event}); }
+        public void Record(string name, string context, string data) { Record(new Event(name,context,data));}
         public void Record(IEnumerable<IEvent> eventBatch)
         {
             var events = new List<RecordedEvent>();
@@ -42,7 +32,6 @@ namespace nblackbox
             }
             events.ForEach(OnRecorded);
         }
-
 
         private RecordedEvent Store(string name, string context, string data)
         {
@@ -58,7 +47,7 @@ namespace nblackbox
         }
 
 
-        public IBlackBoxPlayer Player { get { return new BlackBoxPlayer(_folderpath, _filestore); } }
+        public IBlackBoxPlayer Player { get { return new Player(_folderpath, _filestore); } }
 
 
         public event Action<IRecordedEvent> OnRecorded = _ => { };

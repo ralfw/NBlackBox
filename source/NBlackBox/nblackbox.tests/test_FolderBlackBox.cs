@@ -13,31 +13,6 @@ namespace nblackbox.tests
     public class test_FolderBlackBox
     {
         [Test]
-        public void Acceptance_for_batches()
-        {
-            const string BBFOLDERPATH = "testbb";
-
-            if (Directory.Exists(BBFOLDERPATH)) Directory.Delete(BBFOLDERPATH, true);
-            using (var sut = new FolderBlackBox(BBFOLDERPATH))
-            {
-                var recorded = new List<IRecordedEvent>();
-                sut.OnRecorded += recorded.Add;
-
-                var events = new[]
-                    {
-                        new Event("a", "1", "d1"),
-                        new Event("a", "2", "d2"),
-                        new Event("b", "1", "d3")
-                    };
-
-                sut.Record(events);
-
-                Assert.AreEqual(3, recorded.Count);
-            }
-        }
-
-
-        [Test]
         public void Acceptance_for_singles()
         {
             const string BBFOLDERPATH = "testbb";
@@ -74,6 +49,31 @@ namespace nblackbox.tests
 
                 recorded = sut.Player.FromIndex(2).Play().ToList();
                 Assert.AreEqual(2, recorded.Count);
+            }
+        }
+
+
+        [Test]
+        public void Acceptance_for_batches()
+        {
+            const string BBFOLDERPATH = "testbb";
+
+            if (Directory.Exists(BBFOLDERPATH)) Directory.Delete(BBFOLDERPATH, true);
+            using (var sut = new FolderBlackBox(BBFOLDERPATH))
+            {
+                var recorded = new List<IRecordedEvent>();
+                sut.OnRecorded += recorded.Add;
+
+                var events = new[]
+                    {
+                        new Event("a", "1", "d1"),
+                        new Event("a", "2", "d2"),
+                        new Event("b", "1", "d3")
+                    };
+
+                sut.Record(events);
+
+                Assert.AreEqual(3, recorded.Count);
             }
         }
     }

@@ -3,6 +3,7 @@ using System.IO;
 using NUnit.Framework;
 using equalidator;
 using nblackbox.internals;
+using nblackbox.internals.folder;
 
 namespace nblackbox.tests
 {

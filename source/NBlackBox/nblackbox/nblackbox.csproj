@@ -44,13 +44,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="internals\BlackBoxPlayer.cs" />
+    <Compile Include="internals\folder\Player.cs" />
     <Compile Include="contract\IBlackBox.cs" />
     <Compile Include="contract\IBlackBoxPlayer.cs" />
     <Compile Include="contract\IEvent.cs" />
     <Compile Include="contract\IRecordedEvent.cs" />
     <Compile Include="FolderBlackBox.cs" />
-    <Compile Include="internals\FileStore.cs" />
+    <Compile Include="internals\folder\FileStore.cs" />
+    <Compile Include="internals\sqlite\Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="internals\RecordedEvent.cs" />
     <Compile Include="SQliteBlackBox.cs" />

@@ -56,6 +56,7 @@ namespace nblackbox.tests
             }
         }
 
+
         [Test]
         public void StoreTest()
         {
@@ -75,23 +76,18 @@ namespace nblackbox.tests
 
         private static IEnumerable<IEvent> CreateRecords()
         {
-            for (int card = 0; card < 1000; card++)
+            for (var card = 0; card < 1000; card++)
             {
                 var newGuid = Guid.NewGuid().ToString();
                 var randomText = newGuid;
-                yield return new BareEvent() { Name = "CardAdded", Context = newGuid, Data = randomText };
+
+                yield return new Event("CardAdded", newGuid, randomText);
+
                 for (int i = 0; i < 10; i++)
                 {
-                    yield return new BareEvent() { Name = "CardMoved", Context = newGuid, Data = i.ToString() };
+                    yield return new Event("CardMoved", newGuid, i.ToString());
                 }
             }
-        }
-
-        private class BareEvent : IEvent
-        {
-            public string Name { get; set; }
-            public string Context { get; set; }
-            public string Data { get; set; }
         }
     }
 }

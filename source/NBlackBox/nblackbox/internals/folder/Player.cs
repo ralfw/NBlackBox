@@ -2,19 +2,18 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading;
 using nblackbox.contract;
 
-namespace nblackbox.internals
+namespace nblackbox.internals.folder
 {
-    internal class BlackBoxPlayer : IBlackBoxPlayer
+    internal class Player : IBlackBoxPlayer
     {
         private readonly string _folderpath;
         private readonly FileStore _filestore;
         private readonly List<Func<IRecordedEvent, bool>> _predicates; 
 
 
-        public BlackBoxPlayer(string folderpath, FileStore filestore)
+        public Player(string folderpath, FileStore filestore)
         {
             _folderpath = folderpath;
             _filestore = filestore;
