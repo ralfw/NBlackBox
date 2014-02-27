@@ -10,7 +10,7 @@ using nblackbox.contract;
 namespace nblackbox.tests
 {
     [TestFixture]
-    public class test_FileBlackBox
+    public class test_FolderBlackBox
     {
         [Test]
         public void Acceptance()
