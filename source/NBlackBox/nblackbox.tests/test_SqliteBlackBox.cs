@@ -58,35 +58,36 @@ namespace nblackbox.tests
 
 
         [Test]
-        public void StoreTest()
+        public void Simple_performance_check()
         {
-            var bb = new SQliteBlackBox("TestStore.db3");
+            const string BBFILENAME = "perftest.db3";
+            if (File.Exists(BBFILENAME)) File.Delete(BBFILENAME);
+            using (var bb = new SQliteBlackBox(BBFILENAME))
+            {
+                var sw = Stopwatch.StartNew();
+                bb.Record(Create_many_events());
+                sw.Stop();
+                Console.WriteLine("Created in {0}", sw.Elapsed);
 
-            var sw = Stopwatch.StartNew();
-            bb.Record(CreateRecords());
-            sw.Stop();
-            Console.WriteLine("Created in {0}", sw.Elapsed);
-
-            sw.Restart();
-            var cards = bb.Player.Play().ToList();
-            sw.Stop();
-            Console.WriteLine("Loaded in {0}", sw.Elapsed);
-            Assert.IsTrue(true);
+                sw.Restart();
+                var cards = bb.Player.Play().ToList();
+                sw.Stop();
+                Console.WriteLine("Loaded {0} events in {1}", cards.Count, sw.Elapsed);
+                Assert.IsTrue(true);
+            }
         }
 
-        private static IEnumerable<IEvent> CreateRecords()
+        private static IEnumerable<IEvent> Create_many_events()
         {
             for (var card = 0; card < 1000; card++)
             {
                 var newGuid = Guid.NewGuid().ToString();
                 var randomText = newGuid;
 
-                yield return new Event("CardAdded", newGuid, randomText);
+                yield return new Event("EntityAdded", newGuid, randomText);
 
-                for (int i = 0; i < 10; i++)
-                {
-                    yield return new Event("CardMoved", newGuid, i.ToString());
-                }
+                for (var i = 0; i < 10; i++)
+                    yield return new Event("EntityChanged", newGuid, i.ToString());
             }
         }
     }

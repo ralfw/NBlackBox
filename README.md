@@ -46,11 +46,15 @@ using(var bb = new FolderBlackBox(...)) {
 
 The FolderBlackBox class stores all events as separate text files in a folder passed to its ctor.
 
-A reader-writer-lock is used to make the FolderBlackBox thread-safe.
+A simple lock is used to make the _FolderBlackBox_ thread-safe on write. On read there is no need for this; it´s an append only store.
 
-Of course the FolderBlackBox is not tuned for highest performance. Rather it´s supposed to make exploration of event sourcing and related topics like CQRS as painless as possible.
+Of course the FolderBlackBox is not tuned for highest performance. 
+Rather it´s supposed to make exploration of event sourcing and related topics like CQRS as painless as possible.
 
-In addition to folder based storage of events there is a SQlite based black box: SQliteBlackBox - and it´s working the same, of course.
+In addition to folder based storage of events there is a SQlite based black box: _SQliteBlackBox_ - and it´s working the same, of course.
+Thread-safety is achieved by using a transaction upon write. When recording an event batch it´s wrapped around the whole batch.
+
+All black boxes notify their subscribers only after all events in a batch have been persisted successfully.
 
 Enjoy!
 
