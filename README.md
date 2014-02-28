@@ -56,5 +56,8 @@ Enjoy!
 
 -Ralf Westphal, Hamburg, Germany
 
+* AppVeyor Build Status: [![](https://ci.appveyor.com/api/projects/status?id=s4p0yx7gjbf7f8db)](http://www.appveyor.com/)
+* [NBlackBox on NuGet](https://www.nuget.org/packages/nblackbox)
+
 ### Credits
-Thanks to icanis for his contributions to the SQliteBlackBox.
+Thanks to lcanis for his contributions to the SQliteBlackBox.
