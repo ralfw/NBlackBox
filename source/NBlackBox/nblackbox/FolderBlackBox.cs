@@ -35,12 +35,13 @@ namespace nblackbox
 
         private RecordedEvent Store(string name, string context, string data)
         {
-            var timestamp = DateTime.Now;
-            var index = Directory.GetFiles(_folderpath).Length;
+            var id = Guid.NewGuid();
+            var timestamp = DateTime.Now.ToUniversalTime();
 
-            var @event = new RecordedEvent(timestamp, index, name, context, data);
+            var @event = new RecordedEvent(id, timestamp, name, context, data);
 
-            var filename = timestamp.ToString("s").Replace(":", "-") + "-" + index.ToString("000000000000");
+            var sequencenumber = Directory.GetFiles(_folderpath).Length;
+            var filename = sequencenumber.ToString("000000000000") + ".txt";
             _filestore.Write(Path.Combine(_folderpath, filename), @event);
 
             return @event;

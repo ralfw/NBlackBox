@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace nblackbox.contract
 {
@@ -6,7 +7,7 @@ namespace nblackbox.contract
     {
         IBlackBoxPlayer WithContext(params string[] contexts);
         IBlackBoxPlayer ForEvent(params string[] eventnames);
-        IBlackBoxPlayer FromIndex(long index);
+        IBlackBoxPlayer AfterId(Guid id);
 
         IEnumerable<IRecordedEvent> Play();
     }

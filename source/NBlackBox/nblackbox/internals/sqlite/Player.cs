@@ -34,9 +34,9 @@ namespace nblackbox.internals.sqlite
             return this;
         }
 
-        public IBlackBoxPlayer FromIndex(long index)
+        public IBlackBoxPlayer AfterId(Guid id)
         {
-            startIndex = Math.Max(startIndex, index);
+            throw new NotImplementedException();
             return this;
         }
 
@@ -47,8 +47,8 @@ namespace nblackbox.internals.sqlite
                 connection.Open();
                 using (var command = connection.CreateCommand())
                 {
-                    var sb = new StringBuilder("SELECT eventIndex, timestamp, name, context, data FROM events")
-                                .AppendFormat(" WHERE eventIndex >= {0}", startIndex + 1); // NOTE: SQLite's autoincrement is one-based!
+                    var sb = new StringBuilder("SELECT id, timestamp, name, context, data FROM events");
+                    sb.Append(" where id is not null");
 
                     foreach (var nameConstraint in nameConstraints)
                     {
@@ -62,6 +62,8 @@ namespace nblackbox.internals.sqlite
                         sb.AppendFormat(" AND context in ({0})", options);
                     }
 
+                    sb.Append(" order by timestamp");
+
                     command.CommandText = sb.ToString();
 
                     using (var reader = command.ExecuteReader())
@@ -69,8 +71,8 @@ namespace nblackbox.internals.sqlite
                         while (reader.Read())
                         {
                             var recordedEvent = new RecordedEvent(
+                                Guid.Parse(reader.GetString(0)),
                                 reader.GetDateTime(1),
-                                reader.GetInt64(0) - 1, // NOTE: SQLite's autoincrement is one-based!
                                 reader.GetString(2),
                                 reader.GetString(3),
                                 reader.GetString(4));
