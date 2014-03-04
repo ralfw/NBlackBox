@@ -11,7 +11,7 @@ namespace nblackbox.internals.folder
             {
                 sw.WriteLine("1.0");
                 sw.WriteLine(@event.Timestamp.ToString("s"));
-                sw.WriteLine(@event.Index);
+                sw.WriteLine(@event.Sequencenumber);
                 sw.WriteLine(@event.Name);
                 sw.WriteLine(@event.Context);
                 sw.Write(@event.Data);
@@ -25,11 +25,11 @@ namespace nblackbox.internals.folder
             {
                 var ignore_versionnumber_for_now = sr.ReadLine();
                 var timestamp = DateTime.Parse(sr.ReadLine());
-                var index = long.Parse("0" + sr.ReadLine());
+                var sequencenumber = sr.ReadLine();
                 var name = sr.ReadLine();
                 var context = sr.ReadLine();
                 var data = sr.ReadToEnd();
-                return new RecordedEvent(timestamp, index, name, context, data);
+                return new RecordedEvent(timestamp, sequencenumber, name, context, data);
             }
         }
     }

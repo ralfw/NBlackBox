@@ -36,11 +36,11 @@ namespace nblackbox
         private RecordedEvent Store(string name, string context, string data)
         {
             var timestamp = DateTime.Now;
-            var index = Directory.GetFiles(_folderpath).Length;
+            var sequencenumber = ((long)(Directory.GetFiles(_folderpath).Length)).ToSequenceNumber();
 
-            var @event = new RecordedEvent(timestamp, index, name, context, data);
+            var @event = new RecordedEvent(timestamp, sequencenumber, name, context, data);
 
-            var filename = timestamp.ToString("s").Replace(":", "-") + "-" + index.ToString("000000000000");
+            var filename = sequencenumber + ".txt";
             _filestore.Write(Path.Combine(_folderpath, filename), @event);
 
             return @event;

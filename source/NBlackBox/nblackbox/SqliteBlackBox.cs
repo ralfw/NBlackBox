@@ -26,12 +26,12 @@ namespace nblackbox
                 using (var command = new SQLiteCommand(connection))
                 {
                     command.CommandText = @"CREATE TABLE IF NOT EXISTS events (
-                        eventIndex INTEGER PRIMARY KEY AUTOINCREMENT,
-                        timestamp DATETIME,
-                        name VARCHAR,
-                        context VARCHAR,
-                        data VARCHAR
-                        )";
+                                                sequencenumber INTEGER PRIMARY KEY AUTOINCREMENT,
+                                                timestamp DATETIME,
+                                                name VARCHAR,
+                                                context VARCHAR,
+                                                data VARCHAR
+                                                )";
                     command.ExecuteNonQuery();
                 }
             }
@@ -63,9 +63,9 @@ namespace nblackbox
                             command.Parameters.AddWithValue("@data", @event.Data);
 
                             command.ExecuteNonQuery();
-                            var index = connection.LastInsertRowId - 1; // NOTE: SQLite's autoincrement is one-based!
+                            var sequencenumber = connection.LastInsertRowId.ToSequenceNumber(); // NOTE: SQLite's autoincrement is one-based!
 
-                            recordedEvents.Add(new RecordedEvent(timestamp, index, @event.Name, @event.Context, @event.Data));
+                            recordedEvents.Add(new RecordedEvent(timestamp, sequencenumber, @event.Name, @event.Context, @event.Data));
                         }
                     }
                     transaction.Commit();

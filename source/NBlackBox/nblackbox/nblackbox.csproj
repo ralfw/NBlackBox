@@ -51,6 +51,7 @@
     <Compile Include="contract\IRecordedEvent.cs" />
     <Compile Include="FolderBlackBox.cs" />
     <Compile Include="internals\folder\FileStore.cs" />
+    <Compile Include="internals\LongToSequencenumberString.cs" />
     <Compile Include="internals\sqlite\Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="internals\RecordedEvent.cs" />

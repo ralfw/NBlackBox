@@ -33,9 +33,9 @@ namespace nblackbox.internals.folder
             return this;
         }
 
-        public IBlackBoxPlayer FromIndex(long index)
+        public IBlackBoxPlayer FromSequenceNumber(string sequencenumber)
         {
-            _predicates.Add(r => r.Index >= index);
+            _predicates.Add(r => string.Compare(r.Sequencenumber, sequencenumber) >= 0);
             return this;
         }
 

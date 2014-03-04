@@ -14,7 +14,7 @@ namespace nblackbox.internals.sqlite
         private readonly List<IEnumerable<String>> contextConstraints = new List<IEnumerable<String>>();
         private readonly List<IEnumerable<String>> nameConstraints = new List<IEnumerable<String>>();
 
-        private long startIndex;
+        private string fromSequenceNumber = 0L.ToSequenceNumber();
 
 
         public Player(string connectionString)
@@ -34,9 +34,9 @@ namespace nblackbox.internals.sqlite
             return this;
         }
 
-        public IBlackBoxPlayer FromIndex(long index)
+        public IBlackBoxPlayer FromSequenceNumber(string sequencenumber)
         {
-            startIndex = Math.Max(startIndex, index);
+            fromSequenceNumber = sequencenumber;
             return this;
         }
 
@@ -47,8 +47,8 @@ namespace nblackbox.internals.sqlite
                 connection.Open();
                 using (var command = connection.CreateCommand())
                 {
-                    var sb = new StringBuilder("SELECT eventIndex, timestamp, name, context, data FROM events")
-                                .AppendFormat(" WHERE eventIndex >= {0}", startIndex + 1); // NOTE: SQLite's autoincrement is one-based!
+                    var sb = new StringBuilder("SELECT sequencenumber, timestamp, name, context, data FROM events")
+                                .AppendFormat(" WHERE sequencenumber >= '{0}'", fromSequenceNumber);
 
                     foreach (var nameConstraint in nameConstraints)
                     {
@@ -70,7 +70,7 @@ namespace nblackbox.internals.sqlite
                         {
                             var recordedEvent = new RecordedEvent(
                                 reader.GetDateTime(1),
-                                reader.GetInt64(0) - 1, // NOTE: SQLite's autoincrement is one-based!
+                                reader.GetInt64(0).ToSequenceNumber(),
                                 reader.GetString(2),
                                 reader.GetString(3),
                                 reader.GetString(4));

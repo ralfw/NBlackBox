@@ -6,7 +6,7 @@ namespace nblackbox.contract
     {
         IBlackBoxPlayer WithContext(params string[] contexts);
         IBlackBoxPlayer ForEvent(params string[] eventnames);
-        IBlackBoxPlayer FromIndex(long index);
+        IBlackBoxPlayer FromSequenceNumber(string sequencenumber);
 
         IEnumerable<IRecordedEvent> Play();
     }
