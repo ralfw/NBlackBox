@@ -17,7 +17,7 @@ namespace nblackbox.tests
             File.Delete(EVENTFILENAME);
             var sut = new FileStore();
 
-            var e = new RecordedEvent(Guid.NewGuid(), new DateTime(2000, 5, 12, 10, 11, 12), "e", "c", "d1\nd2");
+            var e = new RecordedEvent(new DateTime(2000, 5, 12, 10, 11, 12), 42, "e", "c", "d1\nd2");
             sut.Write(EVENTFILENAME, e);
             var r = sut.Read(EVENTFILENAME);
 

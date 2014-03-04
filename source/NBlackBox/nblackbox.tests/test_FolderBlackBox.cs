@@ -32,6 +32,7 @@ namespace nblackbox.tests
 
                 recorded = sut.Player.Play().ToList();
                 Assert.AreEqual(4, recorded.Count);
+                Assert.AreEqual(new[] {0, 1, 2, 3}, recorded.Select(r => r.Index).ToArray());
                 Assert.AreEqual(new[] {"d1", "d2", "d3", "d4"}, recorded.Select(r => r.Data).ToArray());
 
                 recorded = sut.Player.ForEvent("a").Play().ToList();
@@ -45,6 +46,9 @@ namespace nblackbox.tests
 
                 recorded = sut.Player.ForEvent("a").WithContext("2").Play().ToList();
                 Assert.AreEqual(1, recorded.Count);
+
+                recorded = sut.Player.FromIndex(2).Play().ToList();
+                Assert.AreEqual(2, recorded.Count);
             }
         }
 

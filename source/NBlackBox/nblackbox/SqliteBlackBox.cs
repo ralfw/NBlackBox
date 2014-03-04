@@ -26,12 +26,12 @@ namespace nblackbox
                 using (var command = new SQLiteCommand(connection))
                 {
                     command.CommandText = @"CREATE TABLE IF NOT EXISTS events (
-                                                id VARCHAR PRIMARY KEY,
-                                                timestamp DATETIME,
-                                                name VARCHAR,
-                                                context VARCHAR,
-                                                data VARCHAR
-                                                )";
+                        eventIndex INTEGER PRIMARY KEY AUTOINCREMENT,
+                        timestamp DATETIME,
+                        name VARCHAR,
+                        context VARCHAR,
+                        data VARCHAR
+                        )";
                     command.ExecuteNonQuery();
                 }
             }
@@ -51,22 +51,21 @@ namespace nblackbox
                 {
                     using (var command = connection.CreateCommand())
                     {
-                        command.CommandText = @"INSERT INTO events (id, timestamp, name, context, data) VALUES(@id, @timestamp,@name,@context,@data)";
+                        command.CommandText = @"INSERT INTO events (timestamp, name, context, data) VALUES(@timestamp,@name,@context,@data)";
                         command.Prepare();
 
                         foreach (var @event in events)
                         {
-                            var id = Guid.NewGuid();
-                            var timestamp = DateTime.Now.ToUniversalTime();
-                            command.Parameters.AddWithValue("@id", id.ToString());
+                            var timestamp = DateTime.Now;
                             command.Parameters.AddWithValue("@timestamp", timestamp);
                             command.Parameters.AddWithValue("@name", @event.Name);
                             command.Parameters.AddWithValue("@context", @event.Context);
                             command.Parameters.AddWithValue("@data", @event.Data);
 
                             command.ExecuteNonQuery();
+                            var index = connection.LastInsertRowId - 1; // NOTE: SQLite's autoincrement is one-based!
 
-                            recordedEvents.Add(new RecordedEvent(id, timestamp, @event.Name, @event.Context, @event.Data));
+                            recordedEvents.Add(new RecordedEvent(timestamp, index, @event.Name, @event.Context, @event.Data));
                         }
                     }
                     transaction.Commit();

@@ -5,17 +5,17 @@ namespace nblackbox.internals
 {
     internal class RecordedEvent : IRecordedEvent
     {
-        public RecordedEvent(Guid id, DateTime timestamp, string name, string context, string data)
+        public RecordedEvent(DateTime timestamp, long index, string name, string context, string data)
         {
-            Id = id;
             Timestamp = timestamp;
+            Index = index;
             Name = name;
             Context = context;
             Data = data;
         }
 
-        public Guid Id { get; private set; }
         public DateTime Timestamp { get; private set; }
+        public long Index { get; private set; }
         public string Name { get; private set; }
         public string Context { get; private set; }
         public string Data { get; private set; }

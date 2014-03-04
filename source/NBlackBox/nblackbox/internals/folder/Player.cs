@@ -33,9 +33,9 @@ namespace nblackbox.internals.folder
             return this;
         }
 
-        public IBlackBoxPlayer AfterId(Guid id)
+        public IBlackBoxPlayer FromIndex(long index)
         {
-            throw new NotImplementedException();
+            _predicates.Add(r => r.Index >= index);
             return this;
         }
 
