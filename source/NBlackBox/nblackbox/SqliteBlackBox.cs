@@ -56,7 +56,7 @@ namespace nblackbox
 
                         foreach (var @event in events)
                         {
-                            var timestamp = DateTime.Now;
+                            var timestamp = DateTime.Now.ToUniversalTime();
                             command.Parameters.AddWithValue("@timestamp", timestamp);
                             command.Parameters.AddWithValue("@name", @event.Name);
                             command.Parameters.AddWithValue("@context", @event.Context);

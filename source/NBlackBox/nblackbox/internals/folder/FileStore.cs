@@ -10,7 +10,7 @@ namespace nblackbox.internals.folder
             using (var sw = new StreamWriter(filename))
             {
                 sw.WriteLine("1.0");
-                sw.WriteLine(@event.Timestamp.ToString("s"));
+                sw.WriteLine(@event.Timestamp.ToString("yyyy-MM-ddThh:mm:ss.fffffff"));
                 sw.WriteLine(@event.Sequencenumber);
                 sw.WriteLine(@event.Name);
                 sw.WriteLine(@event.Context);

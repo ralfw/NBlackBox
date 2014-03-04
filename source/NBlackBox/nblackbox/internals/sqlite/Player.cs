@@ -14,7 +14,7 @@ namespace nblackbox.internals.sqlite
         private readonly List<IEnumerable<String>> contextConstraints = new List<IEnumerable<String>>();
         private readonly List<IEnumerable<String>> nameConstraints = new List<IEnumerable<String>>();
 
-        private string fromSequenceNumber = 0L.ToSequenceNumber();
+        private long fromSequenceNumber = 0;
 
 
         public Player(string connectionString)
@@ -36,7 +36,7 @@ namespace nblackbox.internals.sqlite
 
         public IBlackBoxPlayer FromSequenceNumber(string sequencenumber)
         {
-            fromSequenceNumber = sequencenumber;
+            fromSequenceNumber = long.Parse(sequencenumber);
             return this;
         }
 
@@ -48,7 +48,7 @@ namespace nblackbox.internals.sqlite
                 using (var command = connection.CreateCommand())
                 {
                     var sb = new StringBuilder("SELECT sequencenumber, timestamp, name, context, data FROM events")
-                                .AppendFormat(" WHERE sequencenumber >= '{0}'", fromSequenceNumber);
+                                .AppendFormat(" WHERE sequencenumber >= {0}", fromSequenceNumber);
 
                     foreach (var nameConstraint in nameConstraints)
                     {

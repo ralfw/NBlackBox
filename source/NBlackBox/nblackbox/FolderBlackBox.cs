@@ -35,7 +35,7 @@ namespace nblackbox
 
         private RecordedEvent Store(string name, string context, string data)
         {
-            var timestamp = DateTime.Now;
+            var timestamp = DateTime.Now.ToUniversalTime();
             var sequencenumber = ((long)(Directory.GetFiles(_folderpath).Length)).ToSequenceNumber();
 
             var @event = new RecordedEvent(timestamp, sequencenumber, name, context, data);
