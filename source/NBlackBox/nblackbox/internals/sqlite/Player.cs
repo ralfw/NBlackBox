@@ -62,6 +62,8 @@ namespace nblackbox.internals.sqlite
                         sb.AppendFormat(" AND context in ({0})", options);
                     }
 
+                    sb.AppendFormat(" ORDER BY sequencenumber");
+
                     command.CommandText = sb.ToString();
 
                     using (var reader = command.ExecuteReader())

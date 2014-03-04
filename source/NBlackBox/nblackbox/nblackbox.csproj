@@ -31,6 +31,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MongoDB.Bson">
+      <HintPath>..\..\..\lib\MongoDB\MongoDB.Bson.dll</HintPath>
+    </Reference>
+    <Reference Include="MongoDB.Driver">
+      <HintPath>..\..\..\lib\MongoDB\MongoDB.Driver.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -53,6 +59,7 @@
     <Compile Include="internals\folder\FileStore.cs" />
     <Compile Include="internals\LongToSequencenumberString.cs" />
     <Compile Include="internals\sqlite\Player.cs" />
+    <Compile Include="MongoDbBlackBox.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="internals\RecordedEvent.cs" />
     <Compile Include="SQliteBlackBox.cs" />

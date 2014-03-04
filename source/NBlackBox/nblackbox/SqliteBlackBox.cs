@@ -15,7 +15,7 @@ namespace nblackbox
         public SQliteBlackBox(string filename)
         {
             connectionString = String.Format("Data Source={0}", filename);
-            if (!File.Exists(filename))  InitializeDatabase();
+            if (!File.Exists(filename)) InitializeDatabase();
         }
 
         private void InitializeDatabase()
