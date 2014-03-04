@@ -10,6 +10,7 @@ namespace nblackbox.internals.folder
             using (var sw = new StreamWriter(filename))
             {
                 sw.WriteLine("1.0");
+                sw.WriteLine(@event.Id);
                 sw.WriteLine(@event.Timestamp.ToString("yyyy-MM-ddThh:mm:ss.fffffff"));
                 sw.WriteLine(@event.Sequencenumber);
                 sw.WriteLine(@event.Name);
@@ -24,12 +25,13 @@ namespace nblackbox.internals.folder
             using (var sr = new StreamReader(filename))
             {
                 var ignore_versionnumber_for_now = sr.ReadLine();
+                var id = Guid.Parse("" + sr.ReadLine());
                 var timestamp = DateTime.Parse(sr.ReadLine());
                 var sequencenumber = sr.ReadLine();
                 var name = sr.ReadLine();
                 var context = sr.ReadLine();
                 var data = sr.ReadToEnd();
-                return new RecordedEvent(timestamp, sequencenumber, name, context, data);
+                return new RecordedEvent(id, timestamp, sequencenumber, name, context, data);
             }
         }
     }

@@ -27,6 +27,7 @@ namespace nblackbox
                 {
                     command.CommandText = @"CREATE TABLE IF NOT EXISTS events (
                                                 sequencenumber INTEGER PRIMARY KEY AUTOINCREMENT,
+                                                id VARCHAR,
                                                 timestamp DATETIME,
                                                 name VARCHAR,
                                                 context VARCHAR,
@@ -51,21 +52,23 @@ namespace nblackbox
                 {
                     using (var command = connection.CreateCommand())
                     {
-                        command.CommandText = @"INSERT INTO events (timestamp, name, context, data) VALUES(@timestamp,@name,@context,@data)";
+                        command.CommandText = @"INSERT INTO events (id, timestamp, name, context, data) VALUES(@id, @timestamp,@name,@context,@data)";
                         command.Prepare();
 
                         foreach (var @event in events)
                         {
+                            var id = Guid.NewGuid();
                             var timestamp = DateTime.Now.ToUniversalTime();
+                            command.Parameters.AddWithValue("@id", id.ToString());
                             command.Parameters.AddWithValue("@timestamp", timestamp);
                             command.Parameters.AddWithValue("@name", @event.Name);
                             command.Parameters.AddWithValue("@context", @event.Context);
                             command.Parameters.AddWithValue("@data", @event.Data);
 
                             command.ExecuteNonQuery();
-                            var sequencenumber = connection.LastInsertRowId.ToSequenceNumber(); // NOTE: SQLite's autoincrement is one-based!
+                            var sequencenumber = connection.LastInsertRowId.ToSequenceNumber();
 
-                            recordedEvents.Add(new RecordedEvent(timestamp, sequencenumber, @event.Name, @event.Context, @event.Data));
+                            recordedEvents.Add(new RecordedEvent(id, timestamp, sequencenumber, @event.Name, @event.Context, @event.Data));
                         }
                     }
                     transaction.Commit();

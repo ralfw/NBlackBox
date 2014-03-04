@@ -47,7 +47,7 @@ namespace nblackbox.internals.sqlite
                 connection.Open();
                 using (var command = connection.CreateCommand())
                 {
-                    var sb = new StringBuilder("SELECT sequencenumber, timestamp, name, context, data FROM events")
+                    var sb = new StringBuilder("SELECT sequencenumber, id, timestamp, name, context, data FROM events")
                                 .AppendFormat(" WHERE sequencenumber >= {0}", fromSequenceNumber);
 
                     foreach (var nameConstraint in nameConstraints)
@@ -69,11 +69,12 @@ namespace nblackbox.internals.sqlite
                         while (reader.Read())
                         {
                             var recordedEvent = new RecordedEvent(
-                                reader.GetDateTime(1),
+                                Guid.Parse(reader.GetString(1)),
+                                reader.GetDateTime(2),
                                 reader.GetInt64(0).ToSequenceNumber(),
-                                reader.GetString(2),
                                 reader.GetString(3),
-                                reader.GetString(4));
+                                reader.GetString(4),
+                                reader.GetString(5));
                             yield return recordedEvent;
                         }
                     }
