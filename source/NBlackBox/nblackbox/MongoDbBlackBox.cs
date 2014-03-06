@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using MongoDB.Driver.Builders;
 using nblackbox.contract;
 using nblackbox.internals;
+using nblackbox.internals.mongodb;
 
 namespace nblackbox
 {
@@ -63,7 +61,7 @@ namespace nblackbox
         }
 
 
-        public IBlackBoxPlayer Player { get; private set; }
+        public IBlackBoxPlayer Player { get { return new Player(_eventCol);} }
 
         public event Action<IRecordedEvent> OnRecorded;
 

@@ -58,6 +58,7 @@
     <Compile Include="FolderBlackBox.cs" />
     <Compile Include="internals\folder\FileStore.cs" />
     <Compile Include="internals\LongToSequencenumberString.cs" />
+    <Compile Include="internals\mongodb\Player.cs" />
     <Compile Include="internals\sqlite\Player.cs" />
     <Compile Include="MongoDbBlackBox.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
