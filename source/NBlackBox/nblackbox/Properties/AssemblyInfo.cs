@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("NBlackBox")]
-[assembly: AssemblyDescription("Easily record and replay domain events. A small and simple to use event store.")]
+[assembly: AssemblyDescription("Easily record and replay domain events. A small and simple to use event store. Persistence media supported: file system folder, SQlite, MongoDB")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("NBlackBox")]
