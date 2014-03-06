@@ -32,7 +32,10 @@ namespace nblackbox
                                                 name VARCHAR,
                                                 context VARCHAR,
                                                 data VARCHAR
-                                                )";
+                                                );
+                                            CREATE INDEX IF NOT EXISTS idx_name on events (name ASC);
+                                            CREATE INDEX IF NOT EXISTS idx_context on events (context ASC);
+                                            CREATE UNIQUE INDEX IF NOT EXISTS idx_id on events (id ASC)";
                     command.ExecuteNonQuery();
                 }
             }
