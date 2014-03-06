@@ -5,18 +5,11 @@
     <version>$version$</version>
     <authors>Ralf Westphal</authors>
     <owners>Ralf Westphal</owners>
-    <licenseUrl></licenseUrl>
     <projectUrl>https://github.com/ralfw/NBlackBox</projectUrl>
-    <iconUrl></iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
-    <releaseNotes></releaseNotes>
     <copyright>Copyright 2014</copyright>
-    <tags></tags>
     
-	<dependencies>
-    </dependencies>
-	
 	<references>
       <reference file="MongoDB.Bson.dll" />
 	  <reference file="MongoDB.Driver.dll" />
