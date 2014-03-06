@@ -11,19 +11,20 @@
     <copyright>Copyright 2014</copyright>
     
 	<references>
-      <reference file="MongoDB.Bson.dll" />
+      <reference file="nblackbox.dll" />
+	  <reference file="MongoDB.Bson.dll" />
 	  <reference file="MongoDB.Driver.dll" />
 	  <reference file="System.Data.SQLite.dll" />
     </references>
   </metadata>
   
   <files>
-    <file src="..\..\..\bin\MongoDB.Bson.dll" target="lib"/>
-    <file src="..\..\..\bin\MongoDB.Bson.xml" target="lib"/>
-    <file src="..\..\..\bin\MongoDB.Driver.dll" target="lib"/>
-    <file src="..\..\..\bin\MongoDB.Driver.xml" target="lib"/>
-	<file src="..\..\..\bin\System.Data.SQLite.dll" target="lib"/>
-	<file src="..\..\..\bin\System.Data.SQLite.pdb" target="lib"/>
-	<file src="..\..\..\bin\System.Data.SQLite.xml" target="lib"/>
+    <file src="..\..\..\bin\MongoDB.Bson.dll" target="lib/net45"/>
+    <file src="..\..\..\bin\MongoDB.Bson.xml" target="lib/net45"/>
+    <file src="..\..\..\bin\MongoDB.Driver.dll" target="lib/net45"/>
+    <file src="..\..\..\bin\MongoDB.Driver.xml" target="lib/net45"/>
+	<file src="..\..\..\bin\System.Data.SQLite.dll" target="lib/net45"/>
+	<file src="..\..\..\bin\System.Data.SQLite.pdb" target="lib/net45"/>
+	<file src="..\..\..\bin\System.Data.SQLite.xml" target="lib/net45"/>
   </files>
 </package>
