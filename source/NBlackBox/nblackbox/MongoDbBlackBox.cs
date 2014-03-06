@@ -63,7 +63,7 @@ namespace nblackbox
 
         public IBlackBoxPlayer Player { get { return new Player(_eventCol);} }
 
-        public event Action<IRecordedEvent> OnRecorded;
+        public event Action<IRecordedEvent> OnRecorded = _ => { };
 
         public void Dispose() {}
     }

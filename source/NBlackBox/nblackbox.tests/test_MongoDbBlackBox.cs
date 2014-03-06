@@ -16,6 +16,8 @@ namespace nblackbox.tests
             const string MDBCONNECTION = "mongodb://localhost:27017";
             const string BBNAME = "testbb";
 
+            // mongodb://<user>:<password>@troup.mongohq.com:10091/NBlackBoxTest
+
             var mdbClient = new MongoClient(MDBCONNECTION);
             var mdbServer = mdbClient.GetServer();
             mdbServer.DropDatabase(BBNAME);
@@ -55,6 +57,33 @@ namespace nblackbox.tests
                 recorded = sut.Player.FromSequenceNumber(fromSequenceNumber).Play().ToList();
                 Assert.AreEqual(2, recorded.Count);
             }
-        } 
+        }
+
+
+        [Test, Explicit]
+        public void Use_remote_database()
+        {
+            const string MDBCONNECTION = "...";
+            const string BBNAME = "...";
+
+            var mdbClient = new MongoClient(MDBCONNECTION);
+            var mdbServer = mdbClient.GetServer();
+            var mdb = mdbServer.GetDatabase(BBNAME);
+            mdb.DropCollection("Events");
+
+            using (var sut = new MongoDbBlackBox(MDBCONNECTION, BBNAME))
+            {
+                sut.Record("a", "1", "d1");
+                sut.Record("a", "2", "d2");
+                sut.Record("b", "2", "d3");
+                sut.Record("a", "3", "d4");
+
+                var events = sut.Player.Play().ToArray();
+
+                Assert.AreEqual(4, events.Length);
+                Assert.AreEqual("d1", events[0].Data);
+                Assert.AreEqual("d4", events[3].Data);
+            }
+        }
     }
 }
