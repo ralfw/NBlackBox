@@ -13,7 +13,20 @@
     <releaseNotes></releaseNotes>
     <copyright>Copyright 2014</copyright>
     <tags></tags>
-    <dependencies>
+    
+	<dependencies>
     </dependencies>
+	
+	<references>
+      <reference file="MongoDB.Bson.dll" />
+	  <reference file="MongoDB.Driver.dll" />
+	  <reference file="System.Data.SQLite.dll" />
+    </references>
   </metadata>
+  
+  <files>
+    <file src="lib\MongoDB.Bson.dll" target="lib"/>
+    <file src="lib\MongoDB.Driver.dll" target="lib"/>
+	<file src="lib\System.Data.SQLite.dll" target="lib"/>
+  </files>
 </package>
