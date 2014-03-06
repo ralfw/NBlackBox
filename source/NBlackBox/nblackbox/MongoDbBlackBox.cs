@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MongoDB.Bson;
 using MongoDB.Driver;
+using MongoDB.Driver.Builders;
 using nblackbox.contract;
 using nblackbox.internals;
 
@@ -16,13 +17,17 @@ namespace nblackbox
         private long _eventCounter;
 
 
-        public MongoDbBlackBox(string connectionstring) : this(connectionstring, "MongoDbBlackBox"){}
+        public MongoDbBlackBox(string connectionstring) : this(connectionstring, "NBlackBox"){}
         public MongoDbBlackBox(string connectionstring, string eventstorename)
         {
             var mdbClient = new MongoClient(connectionstring);
             var mdbServer = mdbClient.GetServer();
             var mdb = mdbServer.GetDatabase(eventstorename);
+
             _eventCol = mdb.GetCollection("Events");
+            _eventCol.EnsureIndex(new IndexKeysBuilder().Ascending("sequencenumber"));
+            _eventCol.EnsureIndex(new IndexKeysBuilder().Ascending("name"));
+            _eventCol.EnsureIndex(new IndexKeysBuilder().Ascending("context"));
         }
 
 
