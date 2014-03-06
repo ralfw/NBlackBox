@@ -25,8 +25,12 @@
   </metadata>
   
   <files>
-    <file src="lib\MongoDB.Bson.dll" target="lib"/>
-    <file src="lib\MongoDB.Driver.dll" target="lib"/>
-	<file src="lib\System.Data.SQLite.dll" target="lib"/>
+    <file src="..\..\..\bin\MongoDB.Bson.dll" target="lib"/>
+    <file src="..\..\..\bin\MongoDB.Bson.xml" target="lib"/>
+    <file src="..\..\..\bin\MongoDB.Driver.dll" target="lib"/>
+    <file src="..\..\..\bin\MongoDB.Driver.xml" target="lib"/>
+	<file src="..\..\..\bin\System.Data.SQLite.dll" target="lib"/>
+	<file src="..\..\..\bin\System.Data.SQLite.pdb" target="lib"/>
+	<file src="..\..\..\bin\System.Data.SQLite.xml" target="lib"/>
   </files>
 </package>
